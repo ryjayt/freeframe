@@ -85,7 +85,7 @@ services:
     restart: unless-stopped
 
   minio-init:                     # one-shot: create the bucket (idempotent)
-    image: quay.io/minio/mc:latest
+    image: minio/mc:latest
     env_file:
       - .env
     depends_on:
