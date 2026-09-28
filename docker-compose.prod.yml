@@ -63,26 +63,7 @@ services:
   # Self-hosted object storage. Easypanel's own domain feature routes
   # storage.frame.kempy.au straight to this container on port 9000 —
   # no host ports, no reliance on the internal traefik above.
-  minio:
-    image: quay.io/minio/minio:RELEASE.2025-04-22T22-12-26Z
-    command: server /data --console-address ":9001"
-    env_file:
-      - .env
-    environment:
-      MINIO_ROOT_USER: ${S3_ACCESS_KEY}
-      MINIO_ROOT_PASSWORD: ${S3_SECRET_KEY}
-      MINIO_CORS_ALLOW_ORIGIN: ${FRONTEND_URL}
-      MINIO_CORS_ALLOW_METHODS: GET,PUT,POST,DELETE,HEAD
-      MINIO_CORS_ALLOW_HEADERS: "*"
-      MINIO_CORS_EXPOSE_HEADERS: ETag,Content-Length,x-amz-request-id
-    volumes:
-      - miniodata:/data
-    healthcheck:
-      test: ["CMD", "curl", "-f", "http://localhost:9000/minio/health/live"]
-      interval: 10s
-      timeout: 5s
-      retries: 5
-    restart: unless-stopped
+ 
 
     minio-init:
     image: quay.io/minio/aistor/mc:latest
